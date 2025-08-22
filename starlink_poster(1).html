@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starlink Andohinimandroseza</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 50%, #415a77 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px 0;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            position: relative;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        /* Animation des satellites */
+        .satellites {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .satellite-icon {
+            position: absolute;
+            font-size: 30px;
+            animation: float 8s ease-in-out infinite;
+            opacity: 0.6;
+        }
+
+        .satellite-icon:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .satellite-icon:nth-child(2) { top: 20%; right: 15%; animation-delay: 2s; }
+        .satellite-icon:nth-child(3) { bottom: 30%; left: 20%; animation-delay: 4s; }
+        .satellite-icon:nth-child(4) { bottom: 15%; right: 10%; animation-delay: 6s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .poster {
+            max-width: 650px;
+            width: 95%;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 25px;
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            position: relative;
+            z-index: 10;
+            animation: slideIn 1.2s ease-out;
+            margin: 20px auto;
+            min-height: auto;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-60px) scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .header {
+            background: linear-gradient(45deg, #e63946, #f77f00, #fcbf49);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 42px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 0 0 40px rgba(230, 57, 70, 0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: brightness(1); }
+            to { filter: brightness(1.2); }
+        }
+
+        .location {
+            background: linear-gradient(45deg, #4cc9f0, #7209b7);
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 12px 25px;
+            border-radius: 25px;
+            margin: 20px 0;
+            display: inline-block;
+            box-shadow: 0 8px 20px rgba(76, 201, 240, 0.3);
+        }
+
+        .main-offer {
+            background: linear-gradient(135deg, #264653 0%, #2a9d8f 100%);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 3px solid #e9c46a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-offer::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(233, 196, 106, 0.1), transparent);
+            animation: shine 3s linear infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .speed-display {
+            font-size: 48px;
+            font-weight: bold;
+            color: #e9c46a;
+            margin: 15px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 2;
+        }
+
+        .speed-subtitle {
+            font-size: 22px;
+            color: white;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .price-mega {
+            background: linear-gradient(45deg, #e63946, #dc2626);
+            color: white;
+            font-size: 42px;
+            font-weight: bold;
+            padding: 25px;
+            border-radius: 20px;
+            margin: 25px 0;
+            box-shadow: 0 15px 30px rgba(230, 57, 70, 0.4);
+            animation: pulse 2.5s infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .price-mega::after {
+            content: '🔥';
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 30px;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .benefit-card {
+            background: rgba(65, 90, 119, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            background: rgba(65, 90, 119, 0.5);
+        }
+
+        .benefit-icon {
+            font-size: 28px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .cta-section {
+            background: linear-gradient(45deg, #f77f00, #fcbf49);
+            color: #264653;
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+            font-weight: bold;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #e63946, #dc2626);
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 15px 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(230, 57, 70, 0.4);
+            text-transform: uppercase;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(230, 57, 70, 0.6);
+        }
+
+        .contact-box {
+            background: linear-gradient(135deg, #2a9d8f, #264653);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 2px solid #e9c46a;
+        }
+
+        .promo-banner {
+            background: linear-gradient(45deg, #7209b7, #4cc9f0);
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 15px;
+            border-radius: 50px;
+            margin: 20px 0;
+            animation: flash 3s infinite;
+        }
+
+        @keyframes flash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .wifi-animation {
+            display: inline-block;
+            font-size: 30px;
+            animation: wifiPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes wifiPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        @media (max-width: 600px) {
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            .header {
+                font-size: 36px;
+            }
+            .speed-display {
+                font-size: 36px;
+            }
+            .price-mega {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Satellites animés -->
+    <div class="satellites">
+        <div class="satellite-icon">🛰️</div>
+        <div class="satellite-icon">🛰️</div>
+        <div class="satellite-icon">🛰️</div>
+        <div class="satellite-icon">🛰️</div>
+    </div>
+    
+    <div class="poster">
+        <h1 class="header">STARLINK</h1>
+        
+        <div class="location">📍 ANDOHINIMANDROSEZA</div>
+        
+        <div class="main-offer">
+            <div class="wifi-animation">📶</div>
+            <div class="speed-display">6 - 12 Mbps</div>
+            <div class="speed-subtitle">Internet Satellite Haut Débit</div>
+            <div style="font-size: 18px; color: #e9c46a;">
+                ⚡ Plus rapide que l'ADSL traditionnelle
+            </div>
+        </div>
+        
+        <div class="price-mega">
+            35 000 Ar / MOIS
+        </div>
+        
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <span class="benefit-icon">🌐</span>
+                <strong>Couverture complète</strong><br>
+                Même en zone isolée
+            </div>
+            <div class="benefit-card">
+                <span class="benefit-icon">⚡</span>
+                <strong>Installation rapide</strong><br>
+                Prêt en 24h
+            </div>
+            <div class="benefit-card">
+                <span class="benefit-icon">📱</span>
+                <strong>Multi-appareils</strong><br>
+                Toute la famille connectée
+            </div>
+            <div class="benefit-card">
+                <span class="benefit-icon">🎯</span>
+                <strong>Signal stable</strong><br>
+                24h/24, 7j/7
+            </div>
+        </div>
+        
+        <div class="promo-banner">
+            ⭐ OFFRE SPÉCIALE QUARTIER ⭐<br>
+            Installation GRATUITE pour les 5 premiers !
+        </div>
+        
+        <div class="cta-section">
+            <div style="font-size: 22px; margin-bottom: 15px;">
+                🚀 REJOIGNEZ VOS VOISINS DÉJÀ CONNECTÉS !
+            </div>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSd-jZaM4886Nn04zakDLCLmWSeIrncbAuohb9g7-gn6NYlaow/viewform" target="_blank">
+                <button class="cta-button">CONTACTEZ-MOI MAINTENANT</button>
+            </a>
+        </div>
+        
+        
+ 
+        
+        <div style="margin-top: 20px; font-size: 16px; opacity: 0.9;">
+            🏠 <strong>Service de proximité à Andohinimandroseza</strong><br>
+            Installation et support technique assurés dans votre quartier
+        </div>
+    </div>
+
+    <script>
+        // Animation interactive du bouton
+        const ctaButton = document.querySelector('.cta-button');
+        ctaButton.addEventListener('click', function() {
+            this.innerHTML = '✅ MERCI ! JE VOUS CONTACTE BIENTÔT';
+            this.style.background = 'linear-gradient(45deg, #2a9d8f, #264653)';
+            setTimeout(() => {
+                this.innerHTML = 'CONTACTEZ-MOI MAINTENANT';
+                this.style.background = 'linear-gradient(45deg, #e63946, #dc2626)';
+            }, 3000);
+        });
+        
+        // Animation des cartes bénéfices
+        const benefitCards = document.querySelectorAll('.benefit-card');
+        benefitCards.forEach((card, index) => {
+            setTimeout(() => {
+                card.style.animation = `slideIn 0.6s ease-out ${index * 0.1}s both`;
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
